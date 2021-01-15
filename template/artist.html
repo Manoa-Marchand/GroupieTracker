@@ -2,8 +2,11 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/styleArtist.css">
+    <link rel="stylesheet" href="./assets/css/styleArtists.css" />
     <title>Artites</title>
 </head>
 <body>
@@ -19,7 +22,7 @@
                   <a class="nav-link" href="/">Accueil</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/Artists/">Artistes</a>
+                  <a class="nav-link" href="/artists">Artistes</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Localisations</a>
@@ -33,10 +36,11 @@
     </header>
     <div class="container-fluid" id="listeArtiste">              
         {{range .}}
-    <form action="" method="POST">
+    <form action="/artist?id={{.Name}}" method="POST">
       <button class="container" id="vignette" type="submit" name="artiste" value="{{.Name}}">
         <img src="{{.Image}}" width="200" height="200" alt="{{.Name}}">
         <h3 id="nomArtiste">{{.Name}}</h3>
+        <h4 id="dateCreation">{{.CreationDate}}</h4>
       </button>
     {{end}}
     </form>

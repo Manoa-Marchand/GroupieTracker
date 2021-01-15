@@ -9,7 +9,7 @@ import (
 )
 
 type ArtistesJSON struct {
-	ID           int      `json:"id"`
+	Id           int      `json:"id"`
 	Image        string   `json:"image"`
 	Name         string   `json:"name"`
 	Members      []string `json:"members"`
@@ -20,13 +20,21 @@ type ArtistesJSON struct {
 
 var artistes []ArtistesJSON
 
+type LocationsJSON struct {
+	Id        int      `json:"id"`
+	Locations []string `json:"locations"`
+	Dates     string   `json:"dates"`
+}
+
+var localisation []LocationsJSON
+
 func main() {
 	fs := http.FileServer(http.Dir("./template/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
 	port := "8080"
 	http.HandleFunc("/", index)
-	http.HandleFunc("/Artists/", artists)
+	http.HandleFunc("/artists", artists)
 	println("Le serveur se lance sur le port " + port)
 	http.ListenAndServe(":"+port, nil)
 
@@ -53,5 +61,10 @@ func artists(w http.ResponseWriter, r *http.Request) {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "template/index.html")
+	tpl, err := template.ParseFiles("template/index.html")
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		tpl.Execute(w, nil)
+	}
 }
