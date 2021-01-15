@@ -12,6 +12,7 @@ h3{
 }
 h4{
     font-size: 15px;
+    background-color: #0075C4;
     border: black 1px solid;
     border-radius: 10px;
     width: 100px;
@@ -19,12 +20,12 @@ h4{
 }
 
 body{
-    background-color: black;
+    background-color: #F4F1DE;
 }
 
 /*Header*/
 header nav{
-    background-color: #444444;
+    background-color: #D65108;
 }
 
 /* Listes*/
@@ -33,7 +34,7 @@ header nav{
 }
 
 #vignette {
-    border: solid 2px #444444;
+    border: solid 2px #D65108;
     border-radius: 5px;
     background-color: #ffffff;
     color: black;
