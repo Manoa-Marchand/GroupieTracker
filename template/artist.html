@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/styleIndex.css">
     <meta charset="UTF-8">
-    <title>Groupie Tracker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styleArtist.css">
+    <title>Artites</title>
 </head>
 <body>
     <header>
@@ -32,11 +31,15 @@
             </div>
           </nav>
     </header>
-    <div class="container-fluid" id="image">
-    </div>
-    <footer>
-      
-    </footer>
-    
+    <div class="container-fluid" id="listeArtiste">              
+        {{range .}}
+    <form action="" method="POST">
+      <button class="container" id="vignette" type="submit" name="artiste" value="{{.Name}}">
+        <img src="{{.Image}}" width="200" height="200" alt="{{.Name}}">
+        <h3 id="nomArtiste">{{.Name}}</h3>
+      </button>
+    {{end}}
+    </form>
+  </div>
 </body>
 </html>

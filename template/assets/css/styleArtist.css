@@ -1,0 +1,39 @@
+/*Global*/
+*{
+    padding: 0px;
+    margin: 0px;
+}
+h1{
+    font-size: 50px;
+}
+
+
+/*Header*/
+header nav{
+    background-color: #444444;
+}
+
+/* Listes*/
+#listeArtiste form {
+    text-align: center;
+}
+
+#vignette {
+    display: inline-grid;
+    border-radius: 5px;
+    background-color: #444444;
+    color: #ffffff;
+    width: 210px;
+    height: 280px;
+    margin: 10px 20px;
+}
+
+#vignette img {
+    border-radius: 10px;
+    margin: 4px -11px;
+
+}
+
+#nomArtiste{
+    font-size: 20px;
+}

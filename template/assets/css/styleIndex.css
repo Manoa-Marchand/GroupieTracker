@@ -16,8 +16,9 @@ header nav{
 /*Image*/
 #image{
     height: 750px;
-    background: url("image/music1.jpg") center;
+    background: url("../image/music1.jpg") center;
 }
+
 
 /*Footer*/
 footer{
