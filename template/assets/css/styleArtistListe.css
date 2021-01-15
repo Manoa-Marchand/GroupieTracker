@@ -43,6 +43,16 @@ header nav{
     margin: 20px 30px;
 }
 
+#vignette:hover {
+    border: solid 3px #ffffff;
+    border-radius: 5px;
+    background-color: #D65108;
+    color: #ffffff;
+    width: 210px;
+    height: 290px;
+    margin: 20px 30px;
+}
+
 #vignette img {
     border-radius: 100px;
     margin: 0px -12.5px;
