@@ -13,7 +13,7 @@ h3{
 h4{
     font-size: 15px;
     background-color: #98A6D4;
-    border: black 1px solid;
+    border: #ffffff 2px solid;
     border-radius: 10px;
     width: 100px;
     margin: 0 auto;
@@ -37,7 +37,7 @@ header nav{
     border: solid 3px #D65108;
     border-radius: 5px;
     background-color: #ffffff;
-    color: black;
+    color: #000000;
     width: 210px;
     height: 290px;
     margin: 20px 30px;
