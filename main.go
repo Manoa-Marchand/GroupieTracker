@@ -18,8 +18,6 @@ type ArtistesJSON struct {
 	Relations    string   `json:"relations"`
 }
 
-var artistes []ArtistesJSON
-
 type LocationsJSON struct {
 	Id        int      `json:"id"`
 	Locations []string `json:"locations"`
@@ -35,9 +33,34 @@ func main() {
 	port := "8080"
 	http.HandleFunc("/", index)
 	http.HandleFunc("/artists", artists)
+	http.HandleFunc("/artist", artist)
 	println("Le serveur se lance sur le port " + port)
 	http.ListenAndServe(":"+port, nil)
 
+}
+
+func artist(w http.ResponseWriter, r *http.Request) {
+	idArtiste := r.FormValue("artiste")
+
+	fmt.Println(idArtiste)
+	url := "https://groupietrackers.herokuapp.com/api/artists/" + idArtiste
+	res, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	data, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	defer res.Body.Close()
+	var artiste ArtistesJSON
+	json.Unmarshal(data, &artiste)
+	tpl, err := template.ParseFiles("template/artist.html")
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		tpl.Execute(w, &artiste)
+	}
 }
 
 func artists(w http.ResponseWriter, r *http.Request) {
@@ -51,8 +74,9 @@ func artists(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 	}
 	defer res.Body.Close()
+	var artistes []ArtistesJSON
 	json.Unmarshal(data, &artistes)
-	tpl, err := template.ParseFiles("template/artist.html")
+	tpl, err := template.ParseFiles("template/artistListe.html")
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
