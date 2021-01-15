@@ -12,7 +12,7 @@ h3{
 }
 h4{
     font-size: 15px;
-    background-color: #0075C4;
+    background-color: #98A6D4;
     border: black 1px solid;
     border-radius: 10px;
     width: 100px;
@@ -34,16 +34,16 @@ header nav{
 }
 
 #vignette {
-    border: solid 2px #D65108;
+    border: solid 3px #D65108;
     border-radius: 5px;
     background-color: #ffffff;
     color: black;
     width: 210px;
-    height: 280px;
+    height: 290px;
     margin: 20px 30px;
 }
 
 #vignette img {
-    border-radius: 0px;
-    margin: 0px -12px;
+    border-radius: 100px;
+    margin: 0px -12.5px;
 }
