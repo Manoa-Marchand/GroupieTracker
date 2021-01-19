@@ -36,13 +36,13 @@
     </header>
     <div class="container-fluid" id="listeArtiste">              
         {{range .}}
-        <form action="/artist?nom={{.Name}}" method="POST">
+        <form action="/artist?id={{.Id}}" method="POST">
             <button class="container" id="vignette" type="submit" name="artiste" value="{{.Id}}">
                 <img src="{{.Image}}" width="200" height="200" alt="{{.Name}}">
                 <h3 id="nomArtiste">{{.Name}}</h3>
                 <h4 id="dateCreation">{{.CreationDate}}</h4>
             </button>      
-        {{end}}
+          {{end}}
         </form>
   </div>
 </body>

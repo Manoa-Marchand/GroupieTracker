@@ -30,7 +30,7 @@ func main() {
 	fs := http.FileServer(http.Dir("./template/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
-	port := "8080"
+	port := "8081"
 	http.HandleFunc("/", index)
 	http.HandleFunc("/artists", artists)
 	http.HandleFunc("/artist", artist)
@@ -60,6 +60,7 @@ func artist(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 	} else {
 		tpl.Execute(w, &artiste)
+		fmt.Println(artiste)
 	}
 }
 

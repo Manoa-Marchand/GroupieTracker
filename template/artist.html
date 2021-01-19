@@ -35,9 +35,14 @@
           </nav>
     </header>
     <div id="artistInfo">
-        {{range .}}
-        <div>{{.Id}}</div>
-        {{end}}
+        
+        <div id="miseEnPage">
+          <img id="imageArtiste" src="{{.Image}}" alt="Phtot artiste">
+          <h3 id="nom">{{.Name}}</h3>
+          <p id="membre">Le groupe est composé de {{.Members}}</p>
+          <p id="dateCreation">LE groupe a été créer en {{.CreationDate}}</p>
+          <p id="firstAlbum">Le premier album est sortie en {{.FirstAlbum}}</p>
+        </div>
 
     </div>
     
