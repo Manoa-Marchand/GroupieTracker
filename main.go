@@ -30,7 +30,7 @@ func main() {
 	fs := http.FileServer(http.Dir("./template/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
-	port := "8081"
+	port := "8080"
 	http.HandleFunc("/", index)
 	http.HandleFunc("/artists", artists)
 	http.HandleFunc("/artist", artist)
@@ -41,10 +41,8 @@ func main() {
 
 func artist(w http.ResponseWriter, r *http.Request) {
 	idArtiste := r.FormValue("artiste")
-
-	fmt.Println(idArtiste)
-	url := "https://groupietrackers.herokuapp.com/api/artists/" + idArtiste
-	res, err := http.Get(url)
+	urlapi := "https://groupietrackers.herokuapp.com/api/artists/" + idArtiste
+	res, err := http.Get(urlapi)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -55,12 +53,12 @@ func artist(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	var artiste ArtistesJSON
 	json.Unmarshal(data, &artiste)
-	tpl, err := template.ParseFiles("template/artist.html")
+	files := []string{"./template/artist.html", "./template/base.html"}
+	tpl, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
 		tpl.Execute(w, &artiste)
-		fmt.Println(artiste)
 	}
 }
 
@@ -77,16 +75,19 @@ func artists(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 	var artistes []ArtistesJSON
 	json.Unmarshal(data, &artistes)
-	tpl, err := template.ParseFiles("template/artistListe.html")
+	files := []string{"./template/artistListe.html", "./template/base.html"}
+	tpl, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
 		tpl.Execute(w, &artistes)
 	}
+	fmt.Println(artistes)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	tpl, err := template.ParseFiles("template/index.html")
+	files := []string{"./template/index.html", "./template/base.html"}
+	tpl, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
