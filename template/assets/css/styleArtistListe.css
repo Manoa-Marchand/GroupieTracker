@@ -1,11 +1,4 @@
-/*Global*/
-*{
-    padding: 0px;
-    margin: 0px;
-}
-h1{
-    font-size: 50px;
-}
+
 h3{
     font-size: 16px;
     font-weight: bold;
@@ -22,13 +15,6 @@ h4{
 body{
     background-color: #F4F1DE;
 }
-
-
-/*Header*/
-header nav{
-    background-color: #D65108;
-}
-
 
 /* Listes*/
 #listeArtiste { 
@@ -53,7 +39,6 @@ header nav{
     width: 210px;
     height: 290px;
     cursor:grab;
-    /*grab grabbing none not-allowed pointer*/
     
 }
 #vignette:active {
@@ -64,7 +49,6 @@ header nav{
     width: 210px;
     height: 290px;
     cursor:grabbing;
-    /*grab grabbing none not-allowed pointer*/
     
 }
 

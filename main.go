@@ -82,7 +82,6 @@ func artists(w http.ResponseWriter, r *http.Request) {
 	} else {
 		tpl.Execute(w, &artistes)
 	}
-	fmt.Println(artistes)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
