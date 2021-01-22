@@ -1,4 +1,19 @@
-#miseEnPage{
-    background-color: red;
-    text-align: center;
+/*Global*/
+*{
+	padding: 0px;
+    margin: 0px;
+  text-align: center;
+}
+
+h1{
+	font-size: 50px;
+}
+
+body{
+	background-color: #F4F1DE;
+}
+
+/*Header*/
+header nav{
+	background-color: #D65108;
 }
