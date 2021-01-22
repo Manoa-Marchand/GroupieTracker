@@ -1,50 +1,18 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/css/styleArtist.css" />
-    <title>Document</title>
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm bg-faded navbar-dark"> 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBar" aria-controls="navBar" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-brand">Groupie Tracker</div>
-            <div class="collapse navbar-collapse justify-content-end" id="navBar">
-              <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <a class="nav-link" href="/">Accueil</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/artists">Artistes</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Localisations</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Dates</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-    </header>
+{{template "base" .}}
+{{define "title"}}Groupie Tracker {{end}} 
+{{define "css"}} <link rel="stylesheet" href="./assets/css/styleArtist.css">{{end}}
+  {{define "body"}}
     <div id="artistInfo">
-        
         <div id="miseEnPage">
-          <img id="imageArtiste" src="{{.Image}}" alt="Phtot artiste">
+          <img id="imageArtiste" src="{{.Image}}" alt="Photo artiste">
           <h3 id="nom">{{.Name}}</h3>
-          <p id="membre">Le groupe est composé de {{.Members}}</p>
-          <p id="dateCreation">LE groupe a été créer en {{.CreationDate}}</p>
+          <div>Le groupe est composé de
+            {{range .Members}}
+            {{.}},
+          {{end}}  
+          </div>
+          <p id="dateCreation">Le groupe a été créer en {{.CreationDate}}</p>
           <p id="firstAlbum">Le premier album est sortie en {{.FirstAlbum}}</p>
         </div>
-
     </div>
-    
-</body>
-</html>
+    {{end}}

@@ -10,10 +10,13 @@ h1{
 
 /*Header*/
 header nav{
-    background-color: #444444;
+    background-color: #D65108;
 }
 
-#miseEnPage{
-    background-color: red;
-    text-align: center;
+
+
+/*Footer*/
+footer{
+    background-color: #D65108;
+    height: 150px;
 }

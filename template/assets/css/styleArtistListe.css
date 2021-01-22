@@ -23,13 +23,15 @@ body{
     background-color: #F4F1DE;
 }
 
+
 /*Header*/
 header nav{
     background-color: #D65108;
 }
 
+
 /* Listes*/
-#listeArtiste form {
+#listeArtiste { 
     text-align: center;
 }
 
@@ -50,7 +52,20 @@ header nav{
     color: #ffffff;
     width: 210px;
     height: 290px;
-    margin: 20px 30px;
+    cursor:grab;
+    /*grab grabbing none not-allowed pointer*/
+    
+}
+#vignette:active {
+    border: solid 3px #D65108;
+    border-radius: 5px;
+    background-color: #D65108;
+    color: #ffffff;
+    width: 210px;
+    height: 290px;
+    cursor:grabbing;
+    /*grab grabbing none not-allowed pointer*/
+    
 }
 
 #vignette img {
