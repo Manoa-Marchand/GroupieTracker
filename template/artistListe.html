@@ -2,15 +2,14 @@
 {{define "title"}}Groupie Tracker {{end}} 
 {{define "css"}} <link rel="stylesheet" href="./assets/css/styleArtistListe.css">{{end}}
   {{define "body"}}
-  <h1>test</h1>
   <div class="container-fluid">
-    <div class="row">         
-        {{range $Artists := .}}
-        <form action="/artist?id={{$Artists.Id}}" method="POST">
-            <button id="vignette" type="submit" name="artiste" value="{{$Artists.Id}}">
-              <img src="{{$Artists.Image}}" width="200" height="200" alt="{{$Artists.Name}}">
-              <h3 id="nomArtiste">{{$Artists.Name}}</h3>
-              <h4 id="dateCreation">{{$Artists.CreationDate}}</h4>
+    <div class="row justify-content-center">         
+        {{range .}}
+        <form action="/artist?id={{.Id}}" method="POST">
+            <button id="vignette" type="submit" name="artiste" value="{{.Id}}">
+              <img src="{{.Image}}" width="200" height="200" alt="{{.Name}}">
+              <h3 id="nomArtiste">{{.Name}}</h3>
+              <h4 id="dateCreation">{{.CreationDate}}</h4>
             </button>      
         </form>
         {{end}}
