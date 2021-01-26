@@ -6,13 +6,15 @@
         <div id="miseEnPage">
           <img id="imageArtiste" src="{{.Image}}" alt="Photo artiste">
           <h3 id="nom">{{.Name}}</h3>
+          <br>
           <div>Le groupe est composé de
             {{range .Members}}
             {{.}},
           {{end}}  
           </div>
+          <br>
           <p id="dateCreation">Le groupe a été créer en {{.CreationDate}}</p>
-          <p id="firstAlbum">Le premier album est sortie en {{.FirstAlbum}}</p>
+          <p id="firstAlbum">Le premier album est sortie le {{.FirstAlbum}}</p>
         </div>
     </div>
     {{end}}
