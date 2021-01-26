@@ -19,12 +19,12 @@ type ArtistesJSON struct {
 }
 
 type LocationsJSON struct {
-	Id        int      `json:"id"`
-	Locations []string `json:"locations"`
-	Dates     string   `json:"dates"`
+	Index []struct {
+		Id        int      `json:"id"`
+		Locations []string `json:"locations"`
+		Dates     string   `json:"dates"`
+	} `json:"index"`
 }
-
-var localisation []LocationsJSON
 
 func main() {
 	fs := http.FileServer(http.Dir("./template/assets"))
@@ -37,6 +37,28 @@ func main() {
 	println("Le serveur se lance sur le port " + port)
 	http.ListenAndServe(":"+port, nil)
 
+}
+
+func locations(w http.ResponseWriter, r *http.Request) {
+	url := "https://groupietrackers.herokuapp.com/api/locations"
+	res, err := http.Get(url)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	data, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	defer res.Body.Close()
+	var localisation []LocationsJSON
+	json.Unmarshal(data, &localisation)
+	files := []string{"./template/artistListe.html", "./template/base.html"}
+	tpl, err := template.ParseFiles(files...)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		tpl.Execute(w, &localisation)
+	}
 }
 
 func artist(w http.ResponseWriter, r *http.Request) {
