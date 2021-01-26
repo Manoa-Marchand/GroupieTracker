@@ -11,6 +11,10 @@ h3{
 	color: black;
 }
 
+li{
+	list-style-type: none;
+}
+
 div{
 	font-size: 16px;
 	color: black;
@@ -21,10 +25,6 @@ body{
 }
 
 #imageArtiste {
+	margin-top: 30px;
 	border-radius: 200px;
-}
-
-/*Header*/
-header nav{
-	background-color: #D65108;
 }
