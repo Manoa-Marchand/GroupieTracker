@@ -5,12 +5,23 @@
 	text-align: center;
 }
 
-h1{
-	font-size: 50px;
+h3{
+	font-size: 36px;
+	font-weight: bold;
+	color: black;
+}
+
+div{
+	font-size: 16px;
+	color: black;
 }
 
 body{
 	background-color: #F4F1DE;
+}
+
+#imageArtiste {
+	border-radius: 200px;
 }
 
 /*Header*/
