@@ -40,8 +40,8 @@ func main() {
 }
 
 func locations(w http.ResponseWriter, r *http.Request) {
-	url := "https://groupietrackers.herokuapp.com/api/locations"
-	res, err := http.Get(url)
+	urlapi := "https://groupietrackers.herokuapp.com/api/locations"
+	res, err := http.Get(urlapi)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -50,14 +50,18 @@ func locations(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 	}
 	defer res.Body.Close()
-	var localisation []LocationsJSON
-	json.Unmarshal(data, &localisation)
-	files := []string{"./template/artistListe.html", "./template/base.html"}
+
+	var locations LocationsJSON
+	//var Tableaux Tableau
+	json.Unmarshal(data, &locations)
+	//json.Unmarshal(data, &Tableaux)
+	//for _, Loca := range &Tableaux.Index[:]
+	files := []string{"./template/locations.html", "./template/base.html"}
 	tpl, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		tpl.Execute(w, &localisation)
+		tpl.Execute(w, &locations)
 	}
 }
 
