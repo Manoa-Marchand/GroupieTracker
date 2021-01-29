@@ -34,6 +34,7 @@ func main() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/artists", artists)
 	http.HandleFunc("/artist", artist)
+	http.HandleFunc("/locations", locations)
 	println("Le serveur se lance sur le port " + port)
 	http.ListenAndServe(":"+port, nil)
 
