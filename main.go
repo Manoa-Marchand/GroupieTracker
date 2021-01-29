@@ -56,7 +56,7 @@ func locations(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(data, &locations)
 	//json.Unmarshal(data, &Tableaux)
 	//for _, Loca := range &Tableaux.Index[:]
-	files := []string{"./template/locations.html", "./template/base.html"}
+	files := []string{"./template/locationList.html", "./template/base.html"}
 	tpl, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err.Error())
