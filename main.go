@@ -6,7 +6,6 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
-	"strings"
 )
 
 type ArtistesJSON struct {
@@ -23,21 +22,18 @@ type LocationsJSON struct {
 	Index []struct {
 		Id        int      `json:"id"`
 		Locations []string `json:"locations"`
-		Dates     string   `json:"dates`
 	} `json:"index"`
 }
 
 type tabLoca struct {
-	Id        int
-	Locations []string
-	Countries []string
-	Slugh     []string
+	City    string
+	Country string
+	Slugh   string
 }
 
 func main() {
 	fs := http.FileServer(http.Dir("./template/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
-
 	port := "8080"
 	http.HandleFunc("/", index)
 	http.HandleFunc("/artists", artists)
@@ -56,11 +52,6 @@ func unique(strSlice []string) []string {
 			keys[entry] = true
 			list = append(list, entry)
 		}
-	}
-	for cpt, str := range list {
-		str = strings.Replace(str, "_", " ", -1)
-		str = strings.Replace(str, "-", ", ", -1)
-		list[cpt] = strings.Title(str)
 	}
 	return list
 }
@@ -81,13 +72,33 @@ func locations(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(data, &locations)
 
 	var tab []string
-	var List tabLoca
+	var List [193]tabLoca
+	var Villes []string
+	var Pays []string
+	var Slughs []string
 	for _, loca := range locations.Index {
 		for _, uni := range loca.Locations {
 			tab = append(tab, uni)
 		}
 	}
-	List.Locations = unique(tab)
+	listUnique := unique(tab)
+	for index := 0; index < len(listUnique); index++ {
+		slugh := listUnique[index]
+		Slughs = append(Slughs, slugh)
+		for index2 := 0; index2 < len(slugh); index2++ {
+			if slugh[index2] == '-' {
+				ville := slugh[:index2]
+				pays := slugh[index2+1:]
+				Villes = append(Villes, ville)
+				Pays = append(Pays, pays)
+			}
+		}
+	}
+	for index := range listUnique {
+		List[index].Slugh = Slughs[index]
+		List[index].City = Villes[index]
+		List[index].Country = Pays[index]
+	}
 	files := []string{"./template/locationList.html", "./template/base.html"}
 	tpl, err := template.ParseFiles(files...)
 	if err != nil {

@@ -8,6 +8,14 @@ ul {
 #nomLocation { 
     text-align: center;
 }
+body{
+    background-color: #F4F1DE;
+}
+
+#pays {
+    text-transform: uppercase;
+    font-weight: bold;
+}
 
 #vignette {
     border: solid 3px #D65108;

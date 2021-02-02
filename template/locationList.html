@@ -7,10 +7,12 @@
 {{define "body"}}
   <div class="container-fluid">
     <div class="row justify-content-center">  
-      {{range .Locations}}             
+      {{range .}}
+      <form action="/location?slug={{.Slugh}}" method="POST">          
           <button id="vignette" type="submit" name="location" value="{{.}}">
-            <ul>{{.}}</ul>                       
+            <ul>{{.City}}  <span id="pays">{{.Country}}</span></ul>                       
           </button>
+      </form>
       {{end}}
     </div>
   </div>
