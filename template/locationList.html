@@ -6,18 +6,11 @@
 
 {{define "body"}}
   <div class="container-fluid">
-    <div class="row justify-content-center">         
-      {{range .Index}}       
-        <h3 id="nomLocation">
-            {{range .Locations}}
-                <form action="/location?id={{.}}" method="POST"> 
-                    <button id="vignette" type="submit" name="location" value="{{.}}">
-                        <ul>{{.}}</ul>                        
-                    </button>
-                </form>
-                {{end}}
-            </h3> 
-        
+    <div class="row justify-content-center">  
+      {{range .Locations}}             
+          <button id="vignette" type="submit" name="location" value="{{.}}">
+            <ul>{{.}}</ul>                       
+          </button>
       {{end}}
     </div>
   </div>

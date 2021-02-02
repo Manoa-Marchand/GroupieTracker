@@ -6,6 +6,7 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 type ArtistesJSON struct {
@@ -22,8 +23,15 @@ type LocationsJSON struct {
 	Index []struct {
 		Id        int      `json:"id"`
 		Locations []string `json:"locations"`
-		Dates     string   `json:"dates"`
+		Dates     string   `json:"dates`
 	} `json:"index"`
+}
+
+type tabLoca struct {
+	Id        int
+	Locations []string
+	Countries []string
+	Slugh     []string
 }
 
 func main() {
@@ -40,6 +48,23 @@ func main() {
 
 }
 
+func unique(strSlice []string) []string {
+	keys := make(map[string]bool)
+	list := []string{}
+	for _, entry := range strSlice {
+		if _, value := keys[entry]; !value {
+			keys[entry] = true
+			list = append(list, entry)
+		}
+	}
+	for cpt, str := range list {
+		str = strings.Replace(str, "_", " ", -1)
+		str = strings.Replace(str, "-", ", ", -1)
+		list[cpt] = strings.Title(str)
+	}
+	return list
+}
+
 func locations(w http.ResponseWriter, r *http.Request) {
 	urlapi := "https://groupietrackers.herokuapp.com/api/locations"
 	res, err := http.Get(urlapi)
@@ -53,16 +78,22 @@ func locations(w http.ResponseWriter, r *http.Request) {
 	defer res.Body.Close()
 
 	var locations LocationsJSON
-	//var Tableaux Tableau
 	json.Unmarshal(data, &locations)
-	//json.Unmarshal(data, &Tableaux)
-	//for _, Loca := range &Tableaux.Index[:]
+
+	var tab []string
+	var List tabLoca
+	for _, loca := range locations.Index {
+		for _, uni := range loca.Locations {
+			tab = append(tab, uni)
+		}
+	}
+	List.Locations = unique(tab)
 	files := []string{"./template/locationList.html", "./template/base.html"}
 	tpl, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		tpl.Execute(w, &locations)
+		tpl.Execute(w, &List)
 	}
 }
 
