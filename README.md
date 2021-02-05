@@ -1,4 +1,4 @@
-# Ascii Art Web
+# Groupie Tracker
 The Groupie Tracker is a project which uses the Groupie Tracker API (https://groupietrackers.herokuapp.com/api). This project is to make a website where the provided API data is displayed.
 
 ## Authors:
