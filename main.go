@@ -37,20 +37,6 @@ type tabLoca struct {
 	Slugh   string
 }
 
-type artistlocation struct {
-	Id           int
-	Image        string
-	Name         string
-	CreationDate int
-}
-
-type Artisteslocation struct {
-	Id           int
-	Image        string
-	Name         string
-	CreationDate int
-}
-
 type infoLocation struct {
 	City    string
 	Country string
