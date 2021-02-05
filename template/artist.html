@@ -6,17 +6,25 @@
         <div id="miseEnPage">
           <img id="imageArtiste" src="{{.Image}}" alt="Photo artiste">
           <h3 id="nom">{{.Name}}</h3>
-          <br>
-          <div>Le groupe est composé de :
+          <div id="member">Le groupe est composé de :
             {{range .Members}}
-            <li>
-              {{.}}
-            </li>
-          {{end}}
+              <li>
+                {{.}}
+              </li>
+            {{end}}
           </div>
-          <br>
           <p id="dateCreation">Le groupe a été créer en {{.CreationDate}} et le premier album est sortie le {{.FirstAlbum}}.</p>
-          <p>{{.Relations}}</p>
+          <div id="concert">Concerts:
+            <div id="concertListe">
+              {{range $k, $v := .Relations.DatesLocations}}
+                <strong>{{$k}}:</strong> 
+                {{range $date := $v}} 
+                  <li>{{$date}}</li> 
+                {{end}}
+              {{end}}
+          </div>
+            
+          </div>
         </div>
     </div>
     {{end}}
