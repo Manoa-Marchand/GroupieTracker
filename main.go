@@ -6,8 +6,10 @@ import (
 	"html/template"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
+/*Création des structure qui vont stocker les éléments*/
 type ArtistesJSON struct {
 	Id           int      `json:"id"`
 	Image        string   `json:"image"`
@@ -24,6 +26,10 @@ type LocationsJSON struct {
 		Locations []string `json:"locations"`
 	} `json:"index"`
 }
+type dateByIdJSON struct {
+	Id   int      `json:"id"`
+	Date []string `json:"dates"`
+}
 
 type tabLoca struct {
 	City    string
@@ -31,6 +37,14 @@ type tabLoca struct {
 	Slugh   string
 }
 
+type infoLocation struct {
+	City    string
+	Country string
+	date    string
+	name    string
+}
+
+/*Fonction main qui va lancer le serveur ainsi que gerer les pages */
 func main() {
 	fs := http.FileServer(http.Dir("./template/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
@@ -39,23 +53,66 @@ func main() {
 	http.HandleFunc("/artists", artists)
 	http.HandleFunc("/artist", artist)
 	http.HandleFunc("/locations", locations)
+	http.HandleFunc("/location", location)
 	println("Le serveur se lance sur le port " + port)
 	http.ListenAndServe(":"+port, nil)
 
 }
 
-func unique(strSlice []string) []string {
+/*fonction qui permet d'éviter les doublons*/
+func unique(list []string) []string {
 	keys := make(map[string]bool)
-	list := []string{}
-	for _, entry := range strSlice {
+	newList := []string{}
+	for _, entry := range list {
 		if _, value := keys[entry]; !value {
 			keys[entry] = true
-			list = append(list, entry)
+			newList = append(newList, entry)
 		}
+	}
+	return newList
+}
+
+/*fonction pour mettre des espaces pour les locations*/
+func space(list []string) []string {
+	for index, word := range list {
+		word = strings.Replace(word, "_", " ", -1)
+		list[index] = strings.Title(word)
 	}
 	return list
 }
 
+/*Fonction qui s'occupe de la page de chaque ville*/
+func location(w http.ResponseWriter, r *http.Request) {
+	/*recuperation de la ville avec son slugh*/
+	//locationSlugh := r.FormValue("location")
+	/*on refait une requete à l'api*/
+	urlapi := "https://groupietrackers.herokuapp.com/api/locations"
+	res, err := http.Get(urlapi)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	data, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	defer res.Body.Close()
+
+	var locations LocationsJSON
+	json.Unmarshal(data, &locations)
+	/*algo pour mettre en commun la ville avec un artiste et une date*/
+	/*
+		for _, loca := range locations.Index {
+			for index, localisation := range loca.Locations {
+				if localisation == locationSlugh {
+
+				}
+			}
+		}
+
+	*/
+}
+
+/*Fonction qui gere la page de la la liste des villes*/
 func locations(w http.ResponseWriter, r *http.Request) {
 	urlapi := "https://groupietrackers.herokuapp.com/api/locations"
 	res, err := http.Get(urlapi)
@@ -82,10 +139,10 @@ func locations(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	listUnique := unique(tab)
-	for index := 0; index < len(listUnique); index++ {
+	for index := range listUnique {
 		slugh := listUnique[index]
 		Slughs = append(Slughs, slugh)
-		for index2 := 0; index2 < len(slugh); index2++ {
+		for index2 := range slugh {
 			if slugh[index2] == '-' {
 				ville := slugh[:index2]
 				pays := slugh[index2+1:]
@@ -94,10 +151,13 @@ func locations(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+	newVilles := space(Villes)
+	newPays := space(Pays)
+
 	for index := range listUnique {
 		List[index].Slugh = Slughs[index]
-		List[index].City = Villes[index]
-		List[index].Country = Pays[index]
+		List[index].City = newVilles[index]
+		List[index].Country = newPays[index]
 	}
 	files := []string{"./template/locationList.html", "./template/base.html"}
 	tpl, err := template.ParseFiles(files...)
@@ -108,6 +168,7 @@ func locations(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+/*fonction qui s'occupe de la page des artistes*/
 func artist(w http.ResponseWriter, r *http.Request) {
 	idArtiste := r.FormValue("artiste")
 	urlapi := "https://groupietrackers.herokuapp.com/api/artists/" + idArtiste
@@ -131,6 +192,7 @@ func artist(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+/*fonction qui s'occupe de la page avec la liste des artistes */
 func artists(w http.ResponseWriter, r *http.Request) {
 	url := "https://groupietrackers.herokuapp.com/api/artists"
 	res, err := http.Get(url)
@@ -153,6 +215,7 @@ func artists(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+/*fonction qui s'occupe de la page principale*/
 func index(w http.ResponseWriter, r *http.Request) {
 	files := []string{"./template/index.html", "./template/base.html"}
 	tpl, err := template.ParseFiles(files...)
