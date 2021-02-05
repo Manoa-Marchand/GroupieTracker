@@ -17,7 +17,7 @@ type ArtistesJSON struct {
 	Members      []string `json:"members"`
 	CreationDate int      `json:"creationDate"`
 	FirstAlbum   string   `json:"firstAlbum"`
-	Relations    string   `json:"relations"`
+	Relations    RelationJSON
 }
 
 type LocationsJSON struct {
@@ -26,9 +26,9 @@ type LocationsJSON struct {
 		Locations []string `json:"locations"`
 	} `json:"index"`
 }
-type dateByIdJSON struct {
-	Id   int      `json:"id"`
-	Date []string `json:"dates"`
+
+type RelationJSON struct {
+	DatesLocations map[string][]string `json:"datesLocations"`
 }
 
 type tabLoca struct {
@@ -108,8 +108,8 @@ func location(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		}
-
 	*/
+
 }
 
 /*Fonction qui gere la page de la la liste des villes*/
@@ -171,18 +171,34 @@ func locations(w http.ResponseWriter, r *http.Request) {
 /*fonction qui s'occupe de la page des artistes*/
 func artist(w http.ResponseWriter, r *http.Request) {
 	idArtiste := r.FormValue("artiste")
+	/*Information de l'artiste*/
 	urlapi := "https://groupietrackers.herokuapp.com/api/artists/" + idArtiste
-	res, err := http.Get(urlapi)
+	request1, err := http.Get(urlapi)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	data, err := ioutil.ReadAll(res.Body)
+	data1, err := ioutil.ReadAll(request1.Body)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	defer res.Body.Close()
+	defer request1.Body.Close()
 	var artiste ArtistesJSON
-	json.Unmarshal(data, &artiste)
+	json.Unmarshal(data1, &artiste)
+	/*Relation de l'artiste*/
+	urlapi = "https://groupietrackers.herokuapp.com/api/relation/" + idArtiste
+	request2, err := http.Get(urlapi)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	data, err := ioutil.ReadAll(request2.Body)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	defer request2.Body.Close()
+	var relation RelationJSON
+	json.Unmarshal(data, &relation)
+	artiste.Relations = relation
+	/*Affichage de la page*/
 	files := []string{"./template/artist.html", "./template/base.html"}
 	tpl, err := template.ParseFiles(files...)
 	if err != nil {
