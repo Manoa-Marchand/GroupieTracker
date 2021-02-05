@@ -37,6 +37,20 @@ type tabLoca struct {
 	Slugh   string
 }
 
+type artistlocation struct {
+	Id           int
+	Image        string
+	Name         string
+	CreationDate int
+}
+
+type Artisteslocation struct {
+	Id           int
+	Image        string
+	Name         string
+	CreationDate int
+}
+
 type infoLocation struct {
 	City    string
 	Country string
@@ -48,7 +62,7 @@ type infoLocation struct {
 func main() {
 	fs := http.FileServer(http.Dir("./template/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	port := "8080"
+	port := "8086"
 	http.HandleFunc("/", index)
 	http.HandleFunc("/artists", artists)
 	http.HandleFunc("/artist", artist)
@@ -84,7 +98,7 @@ func space(list []string) []string {
 /*Fonction qui s'occupe de la page de chaque ville*/
 func location(w http.ResponseWriter, r *http.Request) {
 	/*recuperation de la ville avec son slugh*/
-	//locationSlugh := r.FormValue("location")
+	locationSlugh := r.FormValue("location")
 	/*on refait une requete à l'api*/
 	urlapi := "https://groupietrackers.herokuapp.com/api/locations"
 	res, err := http.Get(urlapi)
@@ -97,19 +111,48 @@ func location(w http.ResponseWriter, r *http.Request) {
 	}
 	defer res.Body.Close()
 
-	var locations LocationsJSON
-	json.Unmarshal(data, &locations)
-	/*algo pour mettre en commun la ville avec un artiste et une date*/
-	/*
-		for _, loca := range locations.Index {
-			for index, localisation := range loca.Locations {
-				if localisation == locationSlugh {
+	/*on refait une requete à l'api*/
+	urlapi2 := "https://groupietrackers.herokuapp.com/api/artists"
+	res2, err := http.Get(urlapi2)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	data2, err := ioutil.ReadAll(res2.Body)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	defer res2.Body.Close()
 
-				}
+	var locations LocationsJSON
+	var artists []ArtistesJSON
+	var artist []ArtistesJSON
+	var ID []int
+
+	json.Unmarshal(data, &locations)
+	json.Unmarshal(data2, &artist)
+	/*algo pour mettre en commun la ville avec un artiste*/
+	for _, loca := range locations.Index {
+		for _, localisation := range loca.Locations {
+			if localisation == locationSlugh {
+				ID = append(ID, loca.Id)
 			}
 		}
-	*/
+	}
+	for _, artistesonly := range artist {
+		for _, i := range ID {
+			if artistesonly.Id == i {
+				artists = append(artists, artistesonly)
+			}
+		}
+	}
 
+	files := []string{"./template/location.html", "./template/base.html"}
+	tpl, err := template.ParseFiles(files...)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		tpl.Execute(w, &artists)
+	}
 }
 
 /*Fonction qui gere la page de la la liste des villes*/

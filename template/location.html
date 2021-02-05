@@ -1,0 +1,18 @@
+{{template "base" .}}
+{{define "title"}}Liste des Artistes{{end}} 
+{{define "css"}} <link rel="stylesheet" href="./assets/css/styleArtistListe.css">{{end}}
+  {{define "body"}}
+  <div class="container-fluid">
+    <div class="row justify-content-center">         
+        {{range .}}
+        <form action="/artist?id={{.Id}}" method="POST">
+            <button id="vignette" type="submit" name="artiste" value="{{.Id}}">
+              <img src="{{.Image}}" width="200" height="200" alt="{{.Name}}">
+              <h3 id="nomArtiste">{{.Name}}</h3>
+              <h4 id="dateCreation">{{.CreationDate}}</h4>
+            </button>      
+        </form>
+        {{end}}
+    </div>
+  </div>
+  {{end}}
