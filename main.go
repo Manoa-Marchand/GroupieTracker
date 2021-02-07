@@ -18,6 +18,7 @@ type ArtistesJSON struct {
 	CreationDate int      `json:"creationDate"`
 	FirstAlbum   string   `json:"firstAlbum"`
 	Relations    RelationJSON
+	City         string
 }
 
 type LocationsJSON struct {
@@ -48,7 +49,7 @@ type infoLocation struct {
 func main() {
 	fs := http.FileServer(http.Dir("./template/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	port := "8086"
+	port := "8082"
 	http.HandleFunc("/", index)
 	http.HandleFunc("/artists", artists)
 	http.HandleFunc("/artist", artist)

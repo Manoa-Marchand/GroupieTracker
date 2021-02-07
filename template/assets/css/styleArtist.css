@@ -32,6 +32,9 @@ body{
 	margin-bottom: 25px;
 }
 
+strong{
+	text-transform: capitalize;
+}
 #concert{
 	margin-top: 50px;
 }

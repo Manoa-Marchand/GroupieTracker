@@ -12,7 +12,7 @@
       {{range .}}
       <form action="/location?slug={{.Slugh}}" method="POST">          
           <button id="vignette" type="submit" name="location" value="{{.Slugh}}">
-            <ul>{{.City}},  <span id="pays">{{.Country}}</span></ul>                       
+            <h4><ul name="city" value="{{.City}}">{{.City}},  <span id="pays">{{.Country}}</span></ul></h4>                       
           </button>
       </form>
       {{end}}
