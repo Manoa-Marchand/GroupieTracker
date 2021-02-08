@@ -20,6 +20,10 @@ type ArtistesJSON struct {
 	Relations    RelationJSON
 	City         string
 }
+type locationInfo struct {
+	Ville string
+	Info  []ArtistesJSON
+}
 
 type LocationsJSON struct {
 	Index []struct {
@@ -38,18 +42,11 @@ type tabLoca struct {
 	Slugh   string
 }
 
-type infoLocation struct {
-	City    string
-	Country string
-	date    string
-	name    string
-}
-
 /*Fonction main qui va lancer le serveur ainsi que gerer les pages */
 func main() {
 	fs := http.FileServer(http.Dir("./template/assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	port := "8082"
+	port := "8080"
 	http.HandleFunc("/", index)
 	http.HandleFunc("/artists", artists)
 	http.HandleFunc("/artist", artist)
@@ -132,13 +129,21 @@ func location(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+	var loca locationInfo
+	ville := locationSlugh
+	ville = strings.Replace(ville, "_", " ", -1)
+	ville = strings.Replace(ville, "-", " (", -1)
+	ville += ")"
+	ville = strings.Title(ville)
+	loca.Ville = ville
+	loca.Info = artists
 
 	files := []string{"./template/location.html", "./template/base.html"}
 	tpl, err := template.ParseFiles(files...)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {
-		tpl.Execute(w, &artists)
+		tpl.Execute(w, &loca)
 	}
 }
 

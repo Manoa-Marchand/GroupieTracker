@@ -1,20 +1,28 @@
 {{template "base" .}}
 {{define "title"}}Liste des artistes{{end}} 
-{{define "css"}} <link rel="stylesheet" href="./assets/css/styleArtistListe.css">{{end}}
+{{define "css"}} <link rel="stylesheet" href="./assets/css/styleLocations.css">{{end}}
   {{define "body"}}
-  <br><br>
-  <h2>Liste d'artistes qui ont jouer dans cette ville :</h2>   
+  <h2>Liste d'artistes qui ont joué à (en) {{.Ville}} :</h2>   
   <div class="container-fluid">
     <div class="row justify-content-center">       
-        {{range .}}
-        <form action="/artist?id={{.Id}}" method="POST">
-            <button id="vignette" type="submit" name="artiste" value="{{.Id}}">
-              <img src="{{.Image}}" width="200" height="200" alt="{{.Name}}">
-              <h3 id="nomArtiste">{{.Name}}</h3>
-              <h4 id="dateCreation">{{.CreationDate}}</h4>
+        {{range $artiste := .Info}}
+        <form action="/artist?id={{$artiste.Id}}" method="POST">
+            <button id="vignette" type="submit" name="artiste" value="{{$artiste.Id}}">
+              <img src="{{$artiste.Image}}" width="200" height="200" alt="{{$artiste.Name}}">
+              <h3 id="nomArtiste">{{$artiste.Name}}</h3>
+              <h4 id="dateCreation">{{$artiste.CreationDate}}</h4>
             </button>      
         </form>
         {{end}}
+    </div>
+    <div id="map">
+        <iframe
+          width="600"
+          height="450"
+          frameborder="0" style="border:0"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBMOvUR8gh22LPKT0_2VLqbblFsJnqF4Lo
+            &q={{.Ville}}&maptype=satellite&zoom=8" >
+        </iframe>
     </div>
   </div>
   {{end}}
