@@ -130,6 +130,7 @@ func location(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	var loca locationInfo
+	/*On transforme le slugh en nom de ville avec le pays*/
 	ville := locationSlugh
 	ville = strings.Replace(ville, "_", " ", -1)
 	ville = strings.Replace(ville, "-", " (", -1)
@@ -162,7 +163,7 @@ func locations(w http.ResponseWriter, r *http.Request) {
 
 	var locations LocationsJSON
 	json.Unmarshal(data, &locations)
-
+	/*On met les villes et les pays dans des tableaux pour pouvoir les recuperer plus facilement*/
 	var tab []string
 	var List [193]tabLoca
 	var Villes []string
@@ -188,7 +189,7 @@ func locations(w http.ResponseWriter, r *http.Request) {
 	}
 	newVilles := space(Villes)
 	newPays := space(Pays)
-
+	/*on vide nos tableaux dans notre structure*/
 	for index := range listUnique {
 		List[index].Slugh = Slughs[index]
 		List[index].City = newVilles[index]
