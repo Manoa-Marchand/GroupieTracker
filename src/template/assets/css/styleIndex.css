@@ -1,6 +1,4 @@
-a{
-    text-decoration: none;
-}
+
 /*Image*/
 #image{
     height: 750px;
@@ -19,6 +17,7 @@ a{
     height: 50px;
     text-align: center;
     font-size: 25px;
+    text-decoration: none;
 }
 
 #main:hover {
