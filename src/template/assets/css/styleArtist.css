@@ -1,0 +1,40 @@
+/*Global*/
+*{
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+}
+
+h3{
+	font-size: 36px;
+	font-weight: bold;
+	color: black;
+}
+
+li{
+	list-style-type: none;
+}
+
+div{
+	font-size: 16px;
+	color: black;
+}
+
+body{
+	background-color: #F4F1DE;
+}
+
+#imageArtiste {
+	margin-top: 30px;
+	border-radius: 200px;
+}
+#member{
+	margin-bottom: 25px;
+}
+
+strong{
+	text-transform: capitalize;
+}
+#concert{
+	margin-top: 50px;
+}
