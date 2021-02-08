@@ -17,10 +17,12 @@
           <div id="concert">Concerts:
             <div id="concertListe">
               {{range $k, $v := .Relations.DatesLocations}}
-                <strong>{{$k}}:</strong> 
+              <form action="/location?slug={{$k}}" method="POST"> 
+                <button id="button" type="submit" name="location" value="{{$k}}"><strong>{{$k}}:</strong></button>
                 {{range $date := $v}} 
                   <li>{{$date}}</li> 
                 {{end}}
+              </form>
               {{end}}
           </div>
             

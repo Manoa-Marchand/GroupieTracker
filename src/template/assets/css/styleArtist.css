@@ -38,3 +38,12 @@ strong{
 #concert{
 	margin-top: 50px;
 }
+#button{
+	border:0px;
+	background-color: #F4F1DE;
+    cursor:grab;
+}
+#button:active{
+	border:0px;
+    cursor:grabbing;
+}
