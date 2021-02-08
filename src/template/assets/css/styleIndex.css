@@ -1,11 +1,16 @@
-
+a{
+    text-decoration: none;
+}
 /*Image*/
 #image{
     height: 750px;
     background: url("../image/music1.jpg") center;
+    text-align: center;
+    display: flex;
 }
 
 #main {
+    margin: auto;
     border: solid 3px #D65108;
     border-radius: 50px;
     background-color: #ffffff;
